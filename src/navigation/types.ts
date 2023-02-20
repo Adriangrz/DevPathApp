@@ -15,6 +15,8 @@ export type ScreenPublicRouteProps<T extends keyof PublicStackParamList> =
 
 export type PrivateTabParamList = {
   HabitsScreen: undefined;
+  TodosScreen: undefined;
+  SettingsScreen: undefined;
 };
 
 export type PrivateTabScreenProps<T extends keyof PrivateTabParamList> =
