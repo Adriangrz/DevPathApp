@@ -13,8 +13,22 @@ export type PublicStackScreenProps<T extends keyof PublicStackParamList> =
 export type ScreenPublicRouteProps<T extends keyof PublicStackParamList> =
   RouteProp<PublicStackParamList, T>;
 
-export type PrivateTabParamList = {
+export type HabitsStackParamList = {
   HabitsScreen: undefined;
+  AddHabitScreen: undefined;
+  HabitScreen: undefined;
+  AddTodoScreen: undefined;
+  TodoScreen: undefined;
+};
+
+export type HabitsStackScreenProps<T extends keyof HabitsStackParamList> =
+  BottomTabScreenProps<HabitsStackParamList, T>;
+
+export type HabitsScreenRouteProps<T extends keyof HabitsStackParamList> =
+  RouteProp<HabitsStackParamList, T>;
+
+export type PrivateTabParamList = {
+  Habits: HabitsStackParamList;
   TodosScreen: undefined;
   SettingsScreen: undefined;
 };
