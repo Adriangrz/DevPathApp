@@ -10,4 +10,8 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  switch: {
+    alignSelf: 'flex-end',
+    marginVertical: theme.spacings.base,
+  },
 });

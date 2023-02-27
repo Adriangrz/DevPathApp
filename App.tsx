@@ -6,7 +6,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 
 import {AuthContextProvider} from './src/contexts/AuthContext';
 import {MainStack} from './src/navigation/MainStack';
-import {ThemeProvider} from './src/providers/ThemeProvider';
+import {NavigationTheme, ThemeProvider} from './src/providers/ThemeProvider';
 import {store, persistor} from './src/app/configureStore';
 
 function App(): JSX.Element {
@@ -16,7 +16,7 @@ function App(): JSX.Element {
         <AuthContextProvider>
           <Provider store={store}>
             <PersistGate persistor={persistor}>
-              <NavigationContainer>
+              <NavigationContainer theme={NavigationTheme}>
                 <MainStack />
               </NavigationContainer>
             </PersistGate>

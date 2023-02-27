@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native';
 import {theme} from '../../providers/ThemeProvider/theme';
 
 const BORDER_RADIUS = 100;
-const BUTTON_RIGHT = -5;
-const BUTTON_BOTTOM = -25;
+const BUTTON_RIGHT = 5;
+const BUTTON_BOTTOM = 10;
 
 export const styles = StyleSheet.create({
   button: {

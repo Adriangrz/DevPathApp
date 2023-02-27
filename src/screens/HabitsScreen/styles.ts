@@ -9,5 +9,10 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    marginBottom: theme.spacings.lg * 2,
+  },
+  switch: {
+    alignSelf: 'flex-end',
+    marginVertical: theme.spacings.base,
   },
 });

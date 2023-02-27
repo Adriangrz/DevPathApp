@@ -2,7 +2,11 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {HabitsStackParamList, PrivateTabParamList} from './types';
+import {
+  HabitsStackParamList,
+  PrivateTabParamList,
+  TodosStackParamList,
+} from './types';
 import {HabitsScreen} from '../screens/HabitsScreen';
 import {TodosScreen} from '../screens/TodosScreen';
 import {SettingsScreen} from '../screens/SettingsScreen';
@@ -13,33 +17,61 @@ import {TodoScreen} from '../screens/TodoScreen';
 
 const Tab = createBottomTabNavigator<PrivateTabParamList>();
 
-const Stack = createNativeStackNavigator<HabitsStackParamList>();
+const HabitsStack = createNativeStackNavigator<HabitsStackParamList>();
+const TodosStack = createNativeStackNavigator<TodosStackParamList>();
 
 const HabitsStackScreen = (): JSX.Element => {
   return (
-    <Stack.Navigator
-      initialRouteName="HabitsScreen"
+    <HabitsStack.Navigator
+      initialRouteName="Habits"
       screenOptions={{
         headerShadowVisible: false,
         headerBackTitleVisible: false,
       }}>
-      <Stack.Screen name="HabitsScreen" component={HabitsScreen} />
-      <Stack.Group screenOptions={{presentation: 'modal'}}>
-        <Stack.Screen name="AddHabitScreen" component={AddHabitScreen} />
-        <Stack.Screen name="AddTodoScreen" component={AddTodoScreen} />
-        <Stack.Screen name="TodoScreen" component={TodoScreen} />
-        <Stack.Screen name="HabitScreen" component={HabitScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
+      <HabitsStack.Group>
+        <HabitsStack.Screen name="Habits" component={HabitsScreen} />
+      </HabitsStack.Group>
+      <HabitsStack.Group screenOptions={{presentation: 'modal'}}>
+        <HabitsStack.Screen name="AddHabitScreen" component={AddHabitScreen} />
+        <HabitsStack.Screen name="HabitScreen" component={HabitScreen} />
+      </HabitsStack.Group>
+    </HabitsStack.Navigator>
+  );
+};
+
+const TodosStackScreen = (): JSX.Element => {
+  return (
+    <TodosStack.Navigator
+      initialRouteName="Todos"
+      screenOptions={{
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
+      }}>
+      <TodosStack.Group>
+        <TodosStack.Screen name="Todos" component={TodosScreen} />
+      </TodosStack.Group>
+      <TodosStack.Group screenOptions={{presentation: 'modal'}}>
+        <TodosStack.Screen name="AddTodoScreen" component={AddTodoScreen} />
+        <TodosStack.Screen name="TodoScreen" component={TodoScreen} />
+      </TodosStack.Group>
+    </TodosStack.Navigator>
   );
 };
 
 export const PrivateStack = (): JSX.Element => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Habits" component={HabitsStackScreen} />
-      <Tab.Screen name="TodosScreen" component={TodosScreen} />
-      <Tab.Screen name="SettingsScreen" component={SettingsScreen} />
+      <Tab.Screen
+        options={{headerShown: false}}
+        name="HabitsStack"
+        component={HabitsStackScreen}
+      />
+      <Tab.Screen
+        options={{headerShown: false}}
+        name="TodosStack"
+        component={TodosStackScreen}
+      />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
 };

@@ -1,17 +1,16 @@
 import React, {useMemo, useState} from 'react';
-import {Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {FlatList, SafeAreaView, Switch, View} from 'react-native';
 
 import {styles} from './styles';
-import {LogOutButton} from '../../components/LogOutButton';
 import {AddButton} from '../../components/AddButton';
 import {HabitsStackScreenProps} from '../../navigation/types';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../app/store';
-import {addHabit} from '../../features/habits/habitsSlice';
+import {useSelector} from 'react-redux';
 import {Habit} from '../../types/habit';
+import {RootState} from '../../app/configureStore';
+import {useTheme} from '../../providers/ThemeProvider';
+import {ListItem} from '../../components/ListItem';
 
-type Props = HabitsStackScreenProps<'HabitsScreen'>;
+type Props = HabitsStackScreenProps<'Habits'>;
 
 const filterHabitsByIsCompleted = (habits: Habit[], isCompleted: boolean) => {
   return habits.filter(element => element.isCompleted === isCompleted);
@@ -19,27 +18,49 @@ const filterHabitsByIsCompleted = (habits: Habit[], isCompleted: boolean) => {
 
 export const HabitsScreen = ({navigation}: Props): JSX.Element => {
   const habitsData = useSelector((state: RootState) => state.habits.habits);
-  const dispatch = useDispatch();
-  const [completed, setCompleted] = useState<boolean>(false);
+  const theme = useTheme();
+  const [showUnfinished, setShowUnfinished] = useState<boolean>(false);
 
   const habits = useMemo(() => {
-    if (habitsData) {
-      return filterHabitsByIsCompleted(habitsData, completed);
+    if (habitsData && showUnfinished) {
+      return filterHabitsByIsCompleted(habitsData, false);
+    } else {
+      return habitsData;
     }
-  }, [habitsData, completed]);
+  }, [habitsData, showUnfinished]);
 
-  console.log(habits);
+  const toggleSwitch = () => setShowUnfinished(previousState => !previousState);
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.container}>
-        <Text>habits screen</Text>
-        <LogOutButton />
-        <AddButton
-          onPress={() =>
-            dispatch(addHabit({name: '1', tags: [], isCompleted: false}))
+        <Switch
+          style={styles.switch}
+          trackColor={{
+            false: theme.palette.black.main,
+            true: theme.palette.primary.light,
+          }}
+          thumbColor={
+            showUnfinished
+              ? theme.palette.primary.main
+              : theme.palette.white.main
           }
+          ios_backgroundColor={theme.palette.black.main}
+          onValueChange={toggleSwitch}
+          value={showUnfinished}
+        />
+        <FlatList
+          data={habits}
+          renderItem={({item}) => (
+            <ListItem
+              item={item}
+              onPress={() => navigation.navigate('HabitScreen')}
+            />
+          )}
+          keyExtractor={item => item.id}
         />
       </View>
+      <AddButton onPress={() => navigation.navigate('AddHabitScreen')} />
     </SafeAreaView>
   );
 };

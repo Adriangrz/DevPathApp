@@ -14,7 +14,7 @@ const initialState: HabitsState = {
 
 export const habitsSlice = createSlice({
   name: 'habits',
-  initialState,
+  initialState: initialState,
   reducers: {
     addHabit: (state, action: PayloadAction<CreateHabit>) => {
       state.habits.push({
@@ -23,21 +23,22 @@ export const habitsSlice = createSlice({
         ...action.payload,
       });
     },
-    editHabit: (
-      state,
-      action: PayloadAction<{id: string; createHabit: CreateHabit}>,
-    ) => {
+    editHabit: (state, action: PayloadAction<Habit>) => {
       const id = state.habits.findIndex(
         element => element.id === action.payload.id,
       );
-      state.habits[id] = {...state.habits[id], ...action.payload.createHabit};
+      state.habits[id] = action.payload;
+      return state;
     },
     removeHabit: (state, action: PayloadAction<string>) => {
-      state.habits.filter(element => element.id !== action.payload);
+      state.habits = state.habits.filter(
+        element => element.id !== action.payload,
+      );
+      return state;
     },
   },
 });
 
-export const {addHabit} = habitsSlice.actions;
+export const {addHabit, editHabit, removeHabit} = habitsSlice.actions;
 
 export default habitsSlice.reducer;
