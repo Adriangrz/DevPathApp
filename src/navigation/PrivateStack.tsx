@@ -32,8 +32,16 @@ const HabitsStackScreen = (): JSX.Element => {
         <HabitsStack.Screen name="Habits" component={HabitsScreen} />
       </HabitsStack.Group>
       <HabitsStack.Group screenOptions={{presentation: 'modal'}}>
-        <HabitsStack.Screen name="AddHabitScreen" component={AddHabitScreen} />
-        <HabitsStack.Screen name="HabitScreen" component={HabitScreen} />
+        <HabitsStack.Screen
+          options={{title: 'Add habit'}}
+          name="AddHabitScreen"
+          component={AddHabitScreen}
+        />
+        <HabitsStack.Screen
+          options={{title: 'Habit'}}
+          name="HabitScreen"
+          component={HabitScreen}
+        />
       </HabitsStack.Group>
     </HabitsStack.Navigator>
   );
@@ -51,8 +59,16 @@ const TodosStackScreen = (): JSX.Element => {
         <TodosStack.Screen name="Todos" component={TodosScreen} />
       </TodosStack.Group>
       <TodosStack.Group screenOptions={{presentation: 'modal'}}>
-        <TodosStack.Screen name="AddTodoScreen" component={AddTodoScreen} />
-        <TodosStack.Screen name="TodoScreen" component={TodoScreen} />
+        <TodosStack.Screen
+          options={{title: 'Add todo'}}
+          name="AddTodoScreen"
+          component={AddTodoScreen}
+        />
+        <TodosStack.Screen
+          options={{title: 'Todo'}}
+          name="TodoScreen"
+          component={TodoScreen}
+        />
       </TodosStack.Group>
     </TodosStack.Navigator>
   );

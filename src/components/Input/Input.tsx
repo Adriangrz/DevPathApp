@@ -7,6 +7,6 @@ interface InputProps extends TextInputProps {
   innerRef?: React.RefObject<TextInput>;
 }
 
-export const Input = (props: InputProps): JSX.Element => {
-  return <TextInput ref={props.innerRef} {...props} style={styles.input} />;
+export const Input = ({innerRef, style, ...props}: InputProps): JSX.Element => {
+  return <TextInput ref={innerRef} {...props} style={[styles.input, style]} />;
 };
