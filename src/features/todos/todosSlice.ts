@@ -23,17 +23,18 @@ export const habitsSlice = createSlice({
         ...action.payload,
       });
     },
-    editTodo: (
-      state,
-      action: PayloadAction<{id: string; createTodo: CreateTodo}>,
-    ) => {
+    editTodo: (state, action: PayloadAction<Todo>) => {
       const id = state.todos.findIndex(
         element => element.id === action.payload.id,
       );
-      state.todos[id] = {...state.todos[id], ...action.payload.createTodo};
+      state.todos[id] = action.payload;
+      return state;
     },
     removeTodo: (state, action: PayloadAction<string>) => {
-      state.todos.filter(element => element.id !== action.payload);
+      state.todos = state.todos.filter(
+        element => element.id !== action.payload,
+      );
+      return state;
     },
   },
 });

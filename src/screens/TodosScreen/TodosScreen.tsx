@@ -56,7 +56,9 @@ export const TodosScreen = ({navigation}: Props): JSX.Element => {
           renderItem={({item}) => (
             <ListItem
               item={item}
-              onPress={() => navigation.navigate('TodoScreen')}
+              onPress={() =>
+                navigation.navigate('TodoScreen', {itemId: item.id})
+              }
             />
           )}
           keyExtractor={item => item.id}

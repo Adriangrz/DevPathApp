@@ -16,13 +16,13 @@ export type ScreenPublicRouteProps<T extends keyof PublicStackParamList> =
 export type HabitsStackParamList = {
   Habits: undefined;
   AddHabitScreen: undefined;
-  HabitScreen: undefined;
+  HabitScreen: {itemId: string};
 };
 
 export type TodosStackParamList = {
   Todos: undefined;
   AddTodoScreen: undefined;
-  TodoScreen: undefined;
+  TodoScreen: {itemId: string};
 };
 
 export type HabitsStackScreenProps<T extends keyof HabitsStackParamList> =

@@ -54,7 +54,9 @@ export const HabitsScreen = ({navigation}: Props): JSX.Element => {
           renderItem={({item}) => (
             <ListItem
               item={item}
-              onPress={() => navigation.navigate('HabitScreen')}
+              onPress={() =>
+                navigation.navigate('HabitScreen', {itemId: item.id})
+              }
             />
           )}
           keyExtractor={item => item.id}
