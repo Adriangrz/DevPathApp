@@ -9,5 +9,9 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    alignItems: 'center',
+  },
+  text: {
+    fontFamily: 'DancingScript-Regular',
   },
 });

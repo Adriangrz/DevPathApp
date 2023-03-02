@@ -4,11 +4,12 @@ import {FlatList, SafeAreaView, Switch, View} from 'react-native';
 import {styles} from './styles';
 import {AddButton} from '../../components/AddButton';
 import {HabitsStackScreenProps} from '../../navigation/types';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Habit} from '../../types/habit';
 import {RootState} from '../../app/configureStore';
 import {useTheme} from '../../providers/ThemeProvider';
 import {ListItem} from '../../components/ListItem';
+import {editHabit} from '../../features/habits/habitsSlice';
 
 type Props = HabitsStackScreenProps<'Habits'>;
 
@@ -18,6 +19,7 @@ const filterHabitsByIsCompleted = (habits: Habit[], isCompleted: boolean) => {
 
 export const HabitsScreen = ({navigation}: Props): JSX.Element => {
   const habitsData = useSelector((state: RootState) => state.habits.habits);
+  const dispatch = useDispatch();
   const theme = useTheme();
   const [showUnfinished, setShowUnfinished] = useState<boolean>(false);
 
@@ -54,6 +56,9 @@ export const HabitsScreen = ({navigation}: Props): JSX.Element => {
           renderItem={({item}) => (
             <ListItem
               item={item}
+              onCheckBoxPress={(isChecked: boolean) => {
+                dispatch(editHabit({...item, isCompleted: isChecked}));
+              }}
               onPress={() =>
                 navigation.navigate('HabitScreen', {itemId: item.id})
               }

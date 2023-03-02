@@ -1,22 +1,24 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {useDispatch} from 'react-redux';
 
 import {styles} from './styles';
 import {Button} from '../Button';
-import {editHabit} from '../../features/habits/habitsSlice';
 import {useTheme} from '../../providers/ThemeProvider';
 import {Todo} from '../../types/todo';
 import {Habit} from '../../types/habit';
 
 interface ListItemProps {
   onPress: () => void;
+  onCheckBoxPress: (isChecked: boolean) => void;
   item: Habit | Todo;
 }
 
-export const ListItem = ({onPress, item}: ListItemProps): JSX.Element => {
-  const dispatch = useDispatch();
+export const ListItem = ({
+  onPress,
+  onCheckBoxPress,
+  item,
+}: ListItemProps): JSX.Element => {
   const theme = useTheme();
 
   return (
@@ -34,9 +36,7 @@ export const ListItem = ({onPress, item}: ListItemProps): JSX.Element => {
         <BouncyCheckbox
           disableText={true}
           isChecked={item.isCompleted}
-          onPress={(isChecked: boolean) => {
-            dispatch(editHabit({...item, isCompleted: isChecked}));
-          }}
+          onPress={onCheckBoxPress}
         />
         <Button title="Edit" onPress={onPress} />
       </View>

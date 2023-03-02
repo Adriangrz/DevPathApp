@@ -1,11 +1,12 @@
 import React, {useMemo, useState} from 'react';
 import {FlatList, Switch, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {RootState} from '../../app/configureStore';
 import {AddButton} from '../../components/AddButton';
 import {ListItem} from '../../components/ListItem';
+import {editTodo} from '../../features/todos/todosSlice';
 import {TodosStackScreenProps} from '../../navigation/types';
 import {useTheme} from '../../providers/ThemeProvider';
 import {Todo} from '../../types/todo';
@@ -20,6 +21,7 @@ const filterTodosByIsCompleted = (todos: Todo[], isCompleted: boolean) => {
 
 export const TodosScreen = ({navigation}: Props): JSX.Element => {
   const todosData = useSelector((state: RootState) => state.todos.todos);
+  const dispatch = useDispatch();
   const theme = useTheme();
   const [showUnfinished, setShowUnfinished] = useState<boolean>(false);
 
@@ -59,6 +61,9 @@ export const TodosScreen = ({navigation}: Props): JSX.Element => {
               onPress={() =>
                 navigation.navigate('TodoScreen', {itemId: item.id})
               }
+              onCheckBoxPress={(isChecked: boolean) => {
+                dispatch(editTodo({...item, isCompleted: isChecked}));
+              }}
             />
           )}
           keyExtractor={item => item.id}
