@@ -1,5 +1,5 @@
-import {Formik} from 'formik';
 import React, {useCallback} from 'react';
+import {Formik} from 'formik';
 import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import * as Yup from 'yup';
@@ -9,6 +9,7 @@ import {styles} from './styles';
 import {Tag} from '../../types/tag';
 import {useDispatch} from 'react-redux';
 import {addHabit} from '../../features/habits/habitsSlice';
+
 import {Form} from '../../components/Form';
 
 type AddHabitForm = {
@@ -55,7 +56,7 @@ export const AddHabitScreen = ({navigation}: Props): JSX.Element => {
             onSubmit={(values, {setSubmitting}) => {
               addHabitOnSubmit({submitValues: values, setSubmitting});
             }}>
-            {() => <Form />}
+            <Form />
           </Formik>
         </View>
       </SafeAreaView>

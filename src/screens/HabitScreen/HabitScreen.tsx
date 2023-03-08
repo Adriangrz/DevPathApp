@@ -1,5 +1,5 @@
-import {Formik} from 'formik';
 import React, {useCallback, useMemo} from 'react';
+import {Formik} from 'formik';
 import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
@@ -34,7 +34,7 @@ interface HabitFormValues {
 export const HabitScreen = ({navigation, route}: Props): JSX.Element => {
   const {itemId} = route.params;
   const habit = useSelector((state: RootState) =>
-    state.habits.habits.find(element => element.id === itemId),
+    state.habitsReducer.habits.find(element => element.id === itemId),
   );
   const dispatch = useDispatch();
 
@@ -67,7 +67,7 @@ export const HabitScreen = ({navigation, route}: Props): JSX.Element => {
             onSubmit={(values, {setSubmitting}) => {
               addHabitOnSubmit({submitValues: values, setSubmitting});
             }}>
-            {() => <Form />}
+            <Form />
           </Formik>
         </View>
       </SafeAreaView>

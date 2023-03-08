@@ -27,6 +27,7 @@ export const Form = (): JSX.Element => {
     <View style={styles.form}>
       <View>
         <Input
+          testID="name-input"
           onChangeText={handleChange('name')}
           onBlur={handleBlur('name')}
           value={values.name}
@@ -63,6 +64,7 @@ export const Form = (): JSX.Element => {
         </View>
         <View style={styles.addTagContainer}>
           <Input
+            testID="tag-input"
             style={styles.addTag}
             onChangeText={setTagName}
             value={tagName}
@@ -71,6 +73,7 @@ export const Form = (): JSX.Element => {
             returnKeyType="done"
           />
           <Button
+            testID="add-tag-btn"
             title="+"
             onPress={() => {
               setFieldValue('tags', [
@@ -82,7 +85,7 @@ export const Form = (): JSX.Element => {
           />
         </View>
       </View>
-      <Button onPress={handleSubmit} title="Submit" />
+      <Button testID="add-todo-btn" onPress={handleSubmit} title="Submit" />
     </View>
   );
 };

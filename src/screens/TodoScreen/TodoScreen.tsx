@@ -1,16 +1,17 @@
-import {Formik} from 'formik';
 import React, {useCallback, useMemo} from 'react';
+import {Formik} from 'formik';
 import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import * as Yup from 'yup';
 
 import {RootState} from '../../app/configureStore';
-import {Form} from '../../components/Form';
 import {editTodo} from '../../features/todos/todosSlice';
 import {TodosStackScreenProps} from '../../navigation/types';
 import {Tag} from '../../types/tag';
 import {styles} from './styles';
+
+import {Form} from '../../components/Form';
 
 type TodoForm = {
   submitValues: TodoFormValues;
@@ -34,7 +35,7 @@ interface TodoFormValues {
 export const TodoScreen = ({navigation, route}: Props): JSX.Element => {
   const {itemId} = route.params;
   const todo = useSelector((state: RootState) =>
-    state.todos.todos.find(element => element.id === itemId),
+    state.todosReducer.todos.find(element => element.id === itemId),
   );
   const dispatch = useDispatch();
 
@@ -67,7 +68,7 @@ export const TodoScreen = ({navigation, route}: Props): JSX.Element => {
             onSubmit={(values, {setSubmitting}) => {
               addTodoOnSubmit({submitValues: values, setSubmitting});
             }}>
-            {() => <Form />}
+            <Form />
           </Formik>
         </View>
       </SafeAreaView>

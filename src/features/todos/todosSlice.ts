@@ -13,7 +13,7 @@ const initialState: TodosState = {
 };
 
 export const habitsSlice = createSlice({
-  name: 'todos',
+  name: 'todosReducer',
   initialState,
   reducers: {
     addTodo: (state, action: PayloadAction<CreateTodo>) => {

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View} from 'react-native';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 import {styles} from './styles';
 import {Button} from '../Button';
@@ -8,21 +7,30 @@ import {useTheme} from '../../providers/ThemeProvider';
 import {Todo} from '../../types/todo';
 import {Habit} from '../../types/habit';
 
+import {CheckBoxComponent} from '../CheckBoxComponent';
+
 interface ListItemProps {
   onPress: () => void;
   onCheckBoxPress: (isChecked: boolean) => void;
   item: Habit | Todo;
+  checkBoxTestId: string;
+  itemTestId: string;
 }
 
 export const ListItem = ({
   onPress,
   onCheckBoxPress,
   item,
+  checkBoxTestId,
+  itemTestId,
 }: ListItemProps): JSX.Element => {
+  const [toggleCheckBox, setToggleCheckBox] = useState<boolean>(
+    item.isCompleted,
+  );
   const theme = useTheme();
-
   return (
     <View
+      testID={itemTestId}
       style={[
         styles.item,
         {
@@ -33,10 +41,15 @@ export const ListItem = ({
       ]}>
       <Text>{item.name}</Text>
       <View style={styles.itemOptionsContainer}>
-        <BouncyCheckbox
-          disableText={true}
-          isChecked={item.isCompleted}
-          onPress={onCheckBoxPress}
+        {/* @ts-ignore */}
+        <CheckBoxComponent
+          testID={checkBoxTestId}
+          disabled={false}
+          value={toggleCheckBox}
+          onValueChange={(newValue: boolean) => {
+            setToggleCheckBox(newValue);
+            onCheckBoxPress(newValue);
+          }}
         />
         <Button title="Edit" onPress={onPress} />
       </View>

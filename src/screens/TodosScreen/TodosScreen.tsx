@@ -1,26 +1,21 @@
 import React, {useMemo, useState} from 'react';
-import {FlatList, Switch, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {FlatList, SafeAreaView, Switch, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {RootState} from '../../app/configureStore';
-import {AddButton} from '../../components/AddButton';
-import {ListItem} from '../../components/ListItem';
 import {editTodo} from '../../features/todos/todosSlice';
 import {TodosStackScreenProps} from '../../navigation/types';
 import {useTheme} from '../../providers/ThemeProvider';
-import {Todo} from '../../types/todo';
-
+import {filterTodosByIsCompleted} from '../../utilities/filterTodosByIsCompleted';
 import {styles} from './styles';
+
+import {AddButton} from '../../components/AddButton';
+import {ListItem} from '../../components/ListItem';
 
 type Props = TodosStackScreenProps<'Todos'>;
 
-const filterTodosByIsCompleted = (todos: Todo[], isCompleted: boolean) => {
-  return todos.filter(element => element.isCompleted === isCompleted);
-};
-
 export const TodosScreen = ({navigation}: Props): JSX.Element => {
-  const todosData = useSelector((state: RootState) => state.todos.todos);
+  const todosData = useSelector((state: RootState) => state.todosReducer.todos);
   const dispatch = useDispatch();
   const theme = useTheme();
   const [showUnfinished, setShowUnfinished] = useState<boolean>(false);
@@ -36,7 +31,7 @@ export const TodosScreen = ({navigation}: Props): JSX.Element => {
   const toggleSwitch = () => setShowUnfinished(previousState => !previousState);
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
+    <SafeAreaView testID="todos-screen" style={styles.mainContainer}>
       <View style={styles.container}>
         <Switch
           style={styles.switch}
@@ -54,9 +49,12 @@ export const TodosScreen = ({navigation}: Props): JSX.Element => {
           value={showUnfinished}
         />
         <FlatList
+          testID="todos-list"
           data={todos}
           renderItem={({item}) => (
             <ListItem
+              itemTestId="todo"
+              checkBoxTestId={`todo-${item.id}-checkbox`}
               item={item}
               onPress={() =>
                 navigation.navigate('TodoScreen', {itemId: item.id})
@@ -68,8 +66,11 @@ export const TodosScreen = ({navigation}: Props): JSX.Element => {
           )}
           keyExtractor={item => item.id}
         />
-        <AddButton onPress={() => navigation.navigate('AddTodoScreen')} />
       </View>
+      <AddButton
+        testID="add-todo-btn"
+        onPress={() => navigation.navigate('AddTodoScreen')}
+      />
     </SafeAreaView>
   );
 };

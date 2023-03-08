@@ -1,4 +1,9 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import {
+  combineReducers,
+  configureStore,
+  PreloadedState,
+  StateFromReducersMapObject,
+} from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
@@ -19,19 +24,30 @@ const persistConfig = {
   storage: AsyncStorage,
 };
 
-const reducers = combineReducers({habits: habitsReducer, todos: todosReducer});
+const reducers = combineReducers({
+  habitsReducer: habitsReducer,
+  todosReducer: todosReducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-});
+export type StateFromReducers = StateFromReducersMapObject<typeof reducers>;
+
+export const createStore = (
+  preloadedState?: PreloadedState<StateFromReducers>,
+) =>
+  configureStore({
+    reducer: persistedReducer,
+    preloadedState: preloadedState,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+  });
+
+export const store = createStore();
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

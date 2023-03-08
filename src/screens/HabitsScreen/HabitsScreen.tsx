@@ -2,25 +2,24 @@ import React, {useMemo, useState} from 'react';
 import {FlatList, SafeAreaView, Switch, View} from 'react-native';
 
 import {styles} from './styles';
-import {AddButton} from '../../components/AddButton';
 import {HabitsStackScreenProps} from '../../navigation/types';
 import {useDispatch, useSelector} from 'react-redux';
-import {Habit} from '../../types/habit';
 import {RootState} from '../../app/configureStore';
 import {useTheme} from '../../providers/ThemeProvider';
-import {ListItem} from '../../components/ListItem';
 import {editHabit} from '../../features/habits/habitsSlice';
+import {filterHabitsByIsCompleted} from '../../utilities/filterHabitsByIsCompleted';
+
+import {ListItem} from '../../components/ListItem';
+import {AddButton} from '../../components/AddButton';
 
 type Props = HabitsStackScreenProps<'Habits'>;
 
-const filterHabitsByIsCompleted = (habits: Habit[], isCompleted: boolean) => {
-  return habits.filter(element => element.isCompleted === isCompleted);
-};
-
 export const HabitsScreen = ({navigation}: Props): JSX.Element => {
-  const habitsData = useSelector((state: RootState) => state.habits.habits);
-  const dispatch = useDispatch();
   const theme = useTheme();
+  const habitsData = useSelector(
+    (state: RootState) => state.habitsReducer.habits,
+  );
+  const dispatch = useDispatch();
   const [showUnfinished, setShowUnfinished] = useState<boolean>(false);
 
   const habits = useMemo(() => {
@@ -55,6 +54,8 @@ export const HabitsScreen = ({navigation}: Props): JSX.Element => {
           data={habits}
           renderItem={({item}) => (
             <ListItem
+              itemTestId="habit"
+              checkBoxTestId={`habit-${item.id}-checkbox`}
               item={item}
               onCheckBoxPress={(isChecked: boolean) => {
                 dispatch(editHabit({...item, isCompleted: isChecked}));

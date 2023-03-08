@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
     padding: theme.spacings.base * 2,
   },
   itemOptionsContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     gap: theme.spacings.base,
   },

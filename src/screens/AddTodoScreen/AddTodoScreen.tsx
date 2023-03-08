@@ -1,15 +1,16 @@
-import {Formik} from 'formik';
 import React, {useCallback} from 'react';
+import {Formik} from 'formik';
 import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import * as Yup from 'yup';
 
-import {Form} from '../../components/Form';
 import {addTodo} from '../../features/todos/todosSlice';
 import {TodosStackScreenProps} from '../../navigation/types';
 import {Tag} from '../../types/tag';
 import {styles} from './styles';
+
+import {Form} from '../../components/Form';
 
 type AddTodoForm = {
   submitValues: TodoFormValues;
@@ -47,7 +48,7 @@ export const AddTodoScreen = ({navigation}: Props): JSX.Element => {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
-      <SafeAreaView style={styles.mainContainer}>
+      <SafeAreaView testID="add-todo-screen" style={styles.mainContainer}>
         <View style={styles.container}>
           <Formik
             initialValues={TodoFormInitialValues}
@@ -55,7 +56,7 @@ export const AddTodoScreen = ({navigation}: Props): JSX.Element => {
             onSubmit={(values, {setSubmitting}) => {
               addTodoOnSubmit({submitValues: values, setSubmitting});
             }}>
-            {() => <Form />}
+            <Form />
           </Formik>
         </View>
       </SafeAreaView>

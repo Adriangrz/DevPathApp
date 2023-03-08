@@ -13,7 +13,7 @@ const initialState: HabitsState = {
 };
 
 export const habitsSlice = createSlice({
-  name: 'habits',
+  name: 'habitsReducer',
   initialState: initialState,
   reducers: {
     addHabit: (state, action: PayloadAction<CreateHabit>) => {
