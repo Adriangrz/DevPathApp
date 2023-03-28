@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import {styles} from './styles';
 import {Button} from '../Button';
@@ -39,7 +40,13 @@ export const ListItem = ({
             : theme.palette.white.main,
         },
       ]}>
-      <Text>{item.name}</Text>
+      <View>
+        <Text>{item.name}</Text>
+        <View style={styles.itemDifficulty}>
+          <Icon name="temperature-low" size={20} color="black" />
+          <Text style={styles.itemDifficultyText}>Easy</Text>
+        </View>
+      </View>
       <View style={styles.itemOptionsContainer}>
         {/* @ts-ignore */}
         <CheckBoxComponent

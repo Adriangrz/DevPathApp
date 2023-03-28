@@ -1,9 +1,10 @@
 import React, {useCallback} from 'react';
 import {Formik} from 'formik';
 import {KeyboardAvoidingView, Platform, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import * as Yup from 'yup';
+import {useHeaderHeight} from '@react-navigation/elements';
 
 import {addTodo} from '../../features/todos/todosSlice';
 import {TodosStackScreenProps} from '../../navigation/types';
@@ -32,6 +33,8 @@ interface TodoFormValues {
 }
 
 export const AddTodoScreen = ({navigation}: Props): JSX.Element => {
+  const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
   const TodoFormInitialValues: TodoFormValues = {name: '', tags: []};
 
@@ -47,7 +50,8 @@ export const AddTodoScreen = ({navigation}: Props): JSX.Element => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+      style={styles.container}
+      keyboardVerticalOffset={headerHeight + insets.bottom}>
       <SafeAreaView testID="add-todo-screen" style={styles.mainContainer}>
         <View style={styles.container}>
           <Formik

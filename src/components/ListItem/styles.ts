@@ -21,4 +21,12 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: theme.spacings.base,
   },
+  itemDifficulty: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  itemDifficultyText: {
+    marginLeft: theme.spacings.sm,
+  },
 });

@@ -1,9 +1,10 @@
 import React, {useCallback, useMemo} from 'react';
 import {Formik} from 'formik';
 import {KeyboardAvoidingView, Platform, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import * as Yup from 'yup';
+import {useHeaderHeight} from '@react-navigation/elements';
 
 import {RootState} from '../../app/configureStore';
 import {editTodo} from '../../features/todos/todosSlice';
@@ -37,6 +38,8 @@ export const TodoScreen = ({navigation, route}: Props): JSX.Element => {
   const todo = useSelector((state: RootState) =>
     state.todosReducer.todos.find(element => element.id === itemId),
   );
+  const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
 
   const todoFormInitialValues: TodoFormValues = useMemo(() => {
@@ -59,7 +62,8 @@ export const TodoScreen = ({navigation, route}: Props): JSX.Element => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+      style={styles.container}
+      keyboardVerticalOffset={headerHeight + insets.bottom}>
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.container}>
           <Formik

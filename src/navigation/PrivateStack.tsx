@@ -14,6 +14,7 @@ import {AddHabitScreen} from '../screens/AddHabitScreen';
 import {AddTodoScreen} from '../screens/AddTodoScreen';
 import {HabitScreen} from '../screens/HabitScreen';
 import {TodoScreen} from '../screens/TodoScreen';
+import {LogOutButton} from '../components/LogOutButton';
 
 const Tab = createBottomTabNavigator<PrivateTabParamList>();
 
@@ -22,16 +23,19 @@ const TodosStack = createNativeStackNavigator<TodosStackParamList>();
 
 const HabitsStackScreen = (): JSX.Element => {
   return (
-    <HabitsStack.Navigator
-      initialRouteName="Habits"
-      screenOptions={{
-        headerShadowVisible: false,
-        headerBackTitleVisible: false,
-      }}>
-      <HabitsStack.Group>
+    <HabitsStack.Navigator initialRouteName="Habits">
+      <HabitsStack.Group
+        screenOptions={{
+          headerRight: () => <LogOutButton />,
+        }}>
         <HabitsStack.Screen name="Habits" component={HabitsScreen} />
       </HabitsStack.Group>
-      <HabitsStack.Group screenOptions={{presentation: 'modal'}}>
+      <HabitsStack.Group
+        screenOptions={{
+          presentation: 'modal',
+          headerShadowVisible: false,
+          headerBackTitleVisible: false,
+        }}>
         <HabitsStack.Screen
           options={{title: 'Add habit'}}
           name="AddHabitScreen"
@@ -49,16 +53,19 @@ const HabitsStackScreen = (): JSX.Element => {
 
 const TodosStackScreen = (): JSX.Element => {
   return (
-    <TodosStack.Navigator
-      initialRouteName="Todos"
-      screenOptions={{
-        headerShadowVisible: false,
-        headerBackTitleVisible: false,
-      }}>
-      <TodosStack.Group>
+    <TodosStack.Navigator initialRouteName="Todos">
+      <TodosStack.Group
+        screenOptions={{
+          headerRight: () => <LogOutButton />,
+        }}>
         <TodosStack.Screen name="Todos" component={TodosScreen} />
       </TodosStack.Group>
-      <TodosStack.Group screenOptions={{presentation: 'modal'}}>
+      <TodosStack.Group
+        screenOptions={{
+          presentation: 'modal',
+          headerShadowVisible: false,
+          headerBackTitleVisible: false,
+        }}>
         <TodosStack.Screen
           options={{title: 'Add todo'}}
           name="AddTodoScreen"

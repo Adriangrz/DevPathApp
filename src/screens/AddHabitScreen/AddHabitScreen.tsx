@@ -1,8 +1,9 @@
 import React, {useCallback} from 'react';
 import {Formik} from 'formik';
 import {KeyboardAvoidingView, Platform, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import * as Yup from 'yup';
+import {useHeaderHeight} from '@react-navigation/elements';
 
 import {HabitsStackScreenProps} from '../../navigation/types';
 import {styles} from './styles';
@@ -32,6 +33,8 @@ interface HabitFormValues {
 }
 
 export const AddHabitScreen = ({navigation}: Props): JSX.Element => {
+  const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
   const habitFormInitialValues: HabitFormValues = {name: '', tags: []};
 
@@ -47,7 +50,8 @@ export const AddHabitScreen = ({navigation}: Props): JSX.Element => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+      style={styles.container}
+      keyboardVerticalOffset={headerHeight + insets.bottom}>
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.container}>
           <Formik
