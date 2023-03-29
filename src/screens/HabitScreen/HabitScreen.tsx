@@ -7,11 +7,12 @@ import * as Yup from 'yup';
 import {useHeaderHeight} from '@react-navigation/elements';
 
 import {RootState} from '../../app/configureStore';
-import {Form} from '../../components/Form';
 import {editHabit} from '../../features/habits/habitsSlice';
 import {HabitsStackScreenProps} from '../../navigation/types';
 import {Tag} from '../../types/tag';
 import {styles} from './styles';
+
+import {HabitForm} from '../../components/HabitForm';
 
 type HabitForm = {
   submitValues: HabitFormValues;
@@ -71,7 +72,7 @@ export const HabitScreen = ({navigation, route}: Props): JSX.Element => {
             onSubmit={(values, {setSubmitting}) => {
               addHabitOnSubmit({submitValues: values, setSubmitting});
             }}>
-            <Form />
+            <HabitForm />
           </Formik>
         </View>
       </SafeAreaView>

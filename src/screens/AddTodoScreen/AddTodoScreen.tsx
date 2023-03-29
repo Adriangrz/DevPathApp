@@ -11,7 +11,7 @@ import {TodosStackScreenProps} from '../../navigation/types';
 import {Tag} from '../../types/tag';
 import {styles} from './styles';
 
-import {Form} from '../../components/Form';
+import {TodoForm} from '../../components/TodoForm';
 
 type AddTodoForm = {
   submitValues: TodoFormValues;
@@ -60,7 +60,7 @@ export const AddTodoScreen = ({navigation}: Props): JSX.Element => {
             onSubmit={(values, {setSubmitting}) => {
               addTodoOnSubmit({submitValues: values, setSubmitting});
             }}>
-            <Form />
+            <TodoForm />
           </Formik>
         </View>
       </SafeAreaView>

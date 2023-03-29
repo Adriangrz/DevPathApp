@@ -11,7 +11,7 @@ import {Tag} from '../../types/tag';
 import {useDispatch} from 'react-redux';
 import {addHabit} from '../../features/habits/habitsSlice';
 
-import {Form} from '../../components/Form';
+import {HabitForm} from '../../components/HabitForm';
 
 type AddHabitForm = {
   submitValues: HabitFormValues;
@@ -60,7 +60,7 @@ export const AddHabitScreen = ({navigation}: Props): JSX.Element => {
             onSubmit={(values, {setSubmitting}) => {
               addHabitOnSubmit({submitValues: values, setSubmitting});
             }}>
-            <Form />
+            <HabitForm />
           </Formik>
         </View>
       </SafeAreaView>

@@ -8,7 +8,7 @@ import {Button} from '../Button';
 import {Input} from '../Input';
 import {styles} from './styles';
 
-export const Form = (): JSX.Element => {
+export const HabitForm = (): JSX.Element => {
   const [tagName, setTagName] = useState<string>('');
   const {
     values,
