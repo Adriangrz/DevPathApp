@@ -80,7 +80,7 @@ export const RegisterScreen = ({navigation}: Props): JSX.Element => {
                     placeholder="email"
                     autoCapitalize="none"
                     returnKeyType="next"
-                    innerRef={ref_emailInput}
+                    ref={ref_emailInput}
                     onSubmitEditing={() => {
                       setTimeout(() => {
                         if (ref_passwordInput.current) {
@@ -99,7 +99,7 @@ export const RegisterScreen = ({navigation}: Props): JSX.Element => {
                     placeholder="password"
                     autoCapitalize="none"
                     returnKeyType="done"
-                    innerRef={ref_passwordInput}
+                    ref={ref_passwordInput}
                     secureTextEntry={true}
                     onSubmitEditing={handleSubmit}
                   />

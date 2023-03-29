@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {forwardRef, Ref} from 'react';
 import {TextInput, TextInputProps} from 'react-native';
 
 import {styles} from './styles';
 
-interface InputProps extends TextInputProps {
-  innerRef?: React.RefObject<TextInput>;
-}
-
-export const Input = ({innerRef, style, ...props}: InputProps): JSX.Element => {
-  return <TextInput ref={innerRef} {...props} style={[styles.input, style]} />;
-};
+export const Input = forwardRef(
+  (props: TextInputProps, ref: Ref<TextInput>) => {
+    return (
+      <TextInput ref={ref} {...props} style={[styles.input, props.style]} />
+    );
+  },
+);
